@@ -1,1 +1,2 @@
-# rolling_pi_s
+# Raspberry Pi Weather Station
+## Rolling Pi's
