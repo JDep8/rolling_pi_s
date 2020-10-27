@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+    /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+    .row.content {height: 1500px}
+    
+    /* Set gray background color and 100% height */
+    body {
+      background-color: #0c0c46;
+    }
+    
+    .logo {
+      width: 200px;
+      height: auto;
+    }
+
+    .btn{
+    border-radius: 0 !important;
+}
+
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height: auto;} 
+    }
+  </style>
+</head>
+<body>
+<div class="row text-center">
+  <div>
+    <img class="logo" src="C:\Users\rbullock\Downloads\LOGO.png" alt="">
+  </div>
+  <div class="container-fluid">
+    <nav class="navbar navbar-light bg-light">
+      <form class="form-inline">
+        <button class="btn btn-outline-success" type="button">Dashboard</button>
+        <button class="btn btn-outline-secondary" type="button">Graphs</button>
+        <button class="btn btn-outline-secondary" type="button">Levels</button>
+        <button class="btn btn-outline-secondary" type="button">Automation</button>
+        <button class="btn btn-outline-secondary" type="button">Devices</button>
+        <button class="btn" type="button">Network</button>
+      </form>
+    </nav>
+  </div>
+</div>
+</body>
+</html>
