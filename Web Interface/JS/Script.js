@@ -18,5 +18,9 @@ var chart = new Chart(ctx, {
     options: {
         responsive: true,
         maintainAspectRatio: true
+
+
     }
+
+
 });

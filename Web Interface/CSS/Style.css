@@ -39,6 +39,11 @@ a {
     height: auto;
 }
 
+canvas {
+    background-color: white;
+    text-align: center;
+}
+
 
 /* On small screens, set height to 'auto' for sidenav and grid */
 
