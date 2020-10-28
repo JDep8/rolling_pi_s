@@ -34,6 +34,11 @@ a {
     color: black;
 }
 
+.chart {
+    width: 200px;
+    height: auto;
+}
+
 
 /* On small screens, set height to 'auto' for sidenav and grid */
 
