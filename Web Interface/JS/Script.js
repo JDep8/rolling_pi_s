@@ -1,24 +1,55 @@
-var ctx = document.getElementById('myChart').getContext('2d');
+$(document).ready(() => {
 
-var chart = new Chart(ctx, {
-    // The type of chart we want to create
-    type: 'line',
+    $.ajax({
+        url: "http://localhost:3000/data",
+        //method: 'GET',
+        dataType: 'json',
+        success: function(response) {
 
-    // The data for our dataset
-    data: {
-        labels: ['test1', 'test2', 'test3', 'test4', 'test5', 'test6'],
-        datasets: [{
-            label: 'Tank Level',
-            borderColor: 'orange',
-            data: [0, 10, 5, 2, 20, 30, 0]
-        }]
-    },
+            var arrLabels = new Array(response.rows.length);
 
-    // Configuration options go here
-    options: {
-        responsive: true,
-        maintainAspectRatio: true
+            for (let i = 0; i < response.rows.length; i++) {
+
+                arrLabels[i] = response.rows[i].Date
+
+            }
+
+            var arrData = new Array(response.rows.length);
+
+            for (let i = 0; i < response.rows.length; i++) {
+
+                arrData[i] = response.rows[i].Level
+
+            }
+
+            var ctx = document.getElementById('myChart').getContext('2d');
+
+            var chart = new Chart(ctx, {
+                // The type of chart we want to create
+                type: 'line',
+
+                // The data for our dataset
+                data: {
+                    labels: arrLabels,
+                    datasets: [{
+                        label: 'Tank Level',
+                        borderColor: 'orange',
+                        data: arrData
+                    }]
+                },
+
+                // Configuration options go here
+                options: {
+                    // responsive: true,
+                    // maintainAspectRatio: true
 
 
-    }
-});
+                }
+            });
+
+
+
+        }
+
+    })
+})
