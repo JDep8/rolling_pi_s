@@ -1,20 +1,3 @@
-var startDate = new Date(); //YYYY-MM-DD
-var endDate = new Date() - 7; //YYYY-MM-DD
-
-var getDateArray = function(start, end) {
-    var arr = new Array();
-    var dt = new Date(start);
-    while (dt <= end) {
-        arr.push(new Date(dt));
-        dt.setDate(dt.getDate() + 1);
-    }
-    return arr;
-}
-
-var dateArr = getDateArray(startDate, endDate);
-
-
-
 var ctx = document.getElementById('myChart').getContext('2d');
 
 var chart = new Chart(ctx, {
@@ -23,7 +6,7 @@ var chart = new Chart(ctx, {
 
     // The data for our dataset
     data: {
-        labels: timestamps,
+        labels: ['test1', 'test2', 'test3', 'test4', 'test5', 'test6'],
         datasets: [{
             label: 'Tank Level',
             borderColor: 'orange',
@@ -40,6 +23,33 @@ var chart = new Chart(ctx, {
     }
 });
 
+$(document).ready(() => {
 
-var d = new Date();
-document.getElementById("output").innerHTML = d.getDate + "/" + d.getMonth + "/" + d.getUTCFullYear
+    $.ajax({
+        url: "http://localhost:3000/data",
+        method: 'GET',
+        success: function(response) {
+            //var data = JSON.parse(response);
+            // $('Testresponse').append(response);
+            document.getElementById("demo").innerHTML =
+                this.response;
+            /*
+                        if (data.rows.length > 0) {
+                            for (let index = 0; index < data.rows.length; index++) {
+                                var newRow = $("<tr>");
+                                var cols = "";
+                                var ID = '';
+                                var Level = '';
+                                var Date = '';
+                                cols += '<td> ' + data.rows[index].ID + '</td>';
+                                cols += '<td> ' + data.rows[index].Level + '</td>';
+                                cols += '<td> ' + data.rows[index].Date + '</td>';
+                                newRow.append(cols);
+                                $("#tableData .tbody").append(newRow);
+                            }
+
+                        }
+            */
+        }
+    })
+})
