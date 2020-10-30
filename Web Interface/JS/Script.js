@@ -22,34 +22,3 @@ var chart = new Chart(ctx, {
 
     }
 });
-
-$(document).ready(() => {
-
-    $.ajax({
-        url: "http://localhost:3000/data",
-        method: 'GET',
-        success: function(response) {
-            //var data = JSON.parse(response);
-            // $('Testresponse').append(response);
-            document.getElementById("demo").innerHTML =
-                this.response;
-            /*
-                        if (data.rows.length > 0) {
-                            for (let index = 0; index < data.rows.length; index++) {
-                                var newRow = $("<tr>");
-                                var cols = "";
-                                var ID = '';
-                                var Level = '';
-                                var Date = '';
-                                cols += '<td> ' + data.rows[index].ID + '</td>';
-                                cols += '<td> ' + data.rows[index].Level + '</td>';
-                                cols += '<td> ' + data.rows[index].Date + '</td>';
-                                newRow.append(cols);
-                                $("#tableData .tbody").append(newRow);
-                            }
-
-                        }
-            */
-        }
-    })
-})
