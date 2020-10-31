@@ -7,20 +7,15 @@ $(document).ready(() => {
         success: function(response) {
 
             var arrLabels = new Array(response.rows.length);
-
-            for (let i = 0; i < response.rows.length; i++) {
-
-                arrLabels[i] = response.rows[i].Date
-
-            }
-
             var arrData = new Array(response.rows.length);
 
             for (let i = 0; i < response.rows.length; i++) {
 
+                arrLabels[i] = response.rows[i].Date
                 arrData[i] = response.rows[i].Level
 
             }
+
 
             var ctx = document.getElementById('myChart').getContext('2d');
 
