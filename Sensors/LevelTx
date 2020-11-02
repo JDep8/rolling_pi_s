@@ -1,11 +1,11 @@
-#CyberTank IO
+#CyberTank Level Sensor
+# Imports
 from __future__ import print_function
 import time
 import datetime
 import RPi.GPIO as GPIO
 
-# Use BCM GPIO references
-# instead of physical pin numbers
+# Use BCM GPIO references instead of physical pin numbers
 GPIO.setmode(GPIO.BCM)
 
 # Define GPIO to use on Pi
@@ -14,12 +14,12 @@ Lvl_ECHO    = 15           #Level Tx Echo
 
 
 while True:
-# Speed of sound in cm/s at temperature
+# Speed of sound in cm/s at temperature. When temp sensor works can use live data
     temperature = 20
     speedSound = 33100 + (0.6*temperature)
 
-    #print("Ultrasonic Measurement")
-    #print("Speed of sound is",speedSound/100,"m/s at ",temperature,"deg")
+    print("Ultrasonic Measurement")
+    print("Speed of sound is",speedSound/100,"m/s at ",temperature,"deg")
 
     # Set pins as output and input
     GPIO.setup(Lvl_TRIGGER,GPIO.OUT)  # Trigger
@@ -42,13 +42,10 @@ while True:
     while GPIO.input(Lvl_ECHO)==0:
       start = time.time()
       Watchdog = time.time() - start  #timer for fault
-
     
     while GPIO.input(Lvl_ECHO)==1:
       stop = time.time()
- 
-  
-  
+   
     # Calculate pulse length
     elapsed = stop-start
 
@@ -84,7 +81,7 @@ while True:
     print(Watchdog)
     print("")
     
-    # time to next read
+    # time to next read in seconds
     time.sleep(5)
 
 
