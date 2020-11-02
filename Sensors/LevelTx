@@ -1,0 +1,93 @@
+#CyberTank IO
+from __future__ import print_function
+import time
+import datetime
+import RPi.GPIO as GPIO
+
+# Use BCM GPIO references
+# instead of physical pin numbers
+GPIO.setmode(GPIO.BCM)
+
+# Define GPIO to use on Pi
+Lvl_TRIGGER = 14           #Level Tx Trigger
+Lvl_ECHO    = 15           #Level Tx Echo
+
+
+while True:
+# Speed of sound in cm/s at temperature
+    temperature = 20
+    speedSound = 33100 + (0.6*temperature)
+
+    #print("Ultrasonic Measurement")
+    #print("Speed of sound is",speedSound/100,"m/s at ",temperature,"deg")
+
+    # Set pins as output and input
+    GPIO.setup(Lvl_TRIGGER,GPIO.OUT)  # Trigger
+    GPIO.setup(Lvl_ECHO,GPIO.IN)      # Echo
+
+    # Set trigger to False (Low)
+    GPIO.output(Lvl_TRIGGER, False)
+
+    # Allow module to settle
+    time.sleep(0.5)
+
+    # Send 10us pulse to trigger
+    GPIO.output(Lvl_TRIGGER, True)
+    # Wait 10us
+    time.sleep(0.00001)
+    GPIO.output(Lvl_TRIGGER, False)
+    start = time.time()
+    DateStamp = datetime.datetime.now()
+
+    while GPIO.input(Lvl_ECHO)==0:
+      start = time.time()
+      Watchdog = time.time() - start  #timer for fault
+
+    
+    while GPIO.input(Lvl_ECHO)==1:
+      stop = time.time()
+ 
+  
+  
+    # Calculate pulse length
+    elapsed = stop-start
+
+    # Distance pulse travelled in that time is time
+    # multiplied by the speed of sound (cm/s)
+    distance = elapsed * speedSound
+
+    # That was the distance there and back so halve the value
+    distance = distance / 2 /100
+    #Tank Height in Meters
+    TH = 2.5
+    #Probe Height in cm
+    PH = 25
+    #Tank Volume in litres
+    TV = 2000
+
+    TankLvlM = TH-(distance - (PH/100)) #calculating tank level in metres
+       
+    TnkLvl = TankLvlM/TH * 100 #calculating tank level in percent
+    if TnkLvl > 105:
+        TnkLvl = 105
+    if TnkLvl < 0:
+        TnkLvl = 0
+    TnkVol = (TnkLvl/100) * TV #calculating water left in tank
+    Date = DateStamp
+
+    #print("Elapsed time : {0:5.6f} sec".format(elapsed))
+    print(Date)
+    print("Distance : {0:5.2f} metres".format(distance))
+    print("Tank Level : {0:5.2f} metres ".format(TankLvlM))
+    print("Tank Level : {0:5.2f} %".format(TnkLvl))
+    print("Tank Volume : {0:5.0f} l".format(TnkVol))
+    print(Watchdog)
+    print("")
+    
+    # time to next read
+    time.sleep(5)
+
+
+# Reset GPIO settings
+Finally
+GPIO.cleanup()
