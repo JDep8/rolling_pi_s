@@ -7,19 +7,21 @@ import time
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
-GPIO.setup(18, GPIO.OUT)
-GPIO.setup(17, GPIO.OUT)
-GPIO.setup(27, GPIO.OUT)
-GPIO.setup(21, GPIO.OUT)
+GPIO.setup(21, GPIO.OUT) #Low
+GPIO.setup(18, GPIO.OUT) #Level 1
+GPIO.setup(17, GPIO.OUT) #Level 2
+GPIO.setup(27, GPIO.OUT) #Level 3
+GPIO.setup(22, GPIO.OUT) #Level 4
+
 
 #sensorVariable
 sensorID = 1
 
 #Change variance we want to record
-changeVar = 3 
+changeVar = 3
 
 #Frequency to update
-secToUpdate = 10
+secToUpdate = 5
 
 #connect to our DB
 connection = sqlite3.connect('/home/pi/Documents/CyberTankDB/CyberTank')
@@ -29,7 +31,7 @@ cursor = connection.cursor()
 def updateDB():
    #this would be the code reding in the sensor data
    #For testing we are using a random num generator as the water tank level
-    currentLevel = random.randint(0 , 100)
+    currentLevel = random.randint (0 , 100)
     
    #get previous level
     cursor.execute("SELECT level FROM tankLevel WHERE no = (SELECT MAX(no)  FROM tankLevel )")
@@ -49,32 +51,42 @@ def updateLights():
     cursor.execute("SELECT level FROM tankLevel WHERE no = (SELECT MAX(no)  FROM tankLevel )")
     value  = cursor.fetchall()
     level = int(value[0][0])
-
+                                                                                                                                        
     #turn lights on according to level
-    if level > 80:
+    if level >= 80:
         GPIO.output(18,True)
         GPIO.output(17,True)
         GPIO.output(27,True)
+        GPIO.output(22,True)
         GPIO.output(21,False)
 
-    elif int(level) > 50:
+    elif level >= 60:
+        GPIO.output(18,True)
+        GPIO.output(17,True)
+        GPIO.output(27,True)
+        GPIO.output(22,False)
+        GPIO.output(21,False)
+
+
+    elif level >= 40:
         GPIO.output(18,True)
         GPIO.output(17,True)
         GPIO.output(27,False)
+        GPIO.output(22,False)
         GPIO.output(21,False)
 
-
-    elif level > 30:
+    elif level >= 20:
         GPIO.output(18,True)
         GPIO.output(17,False)
         GPIO.output(27,False)
+        GPIO.output(22,False)
         GPIO.output(21,False)
-
 
     else:
         GPIO.output(18,False)
         GPIO.output(17,False)
         GPIO.output(27,False)
+        GPIO.output(22,False)
         
         #loop for flashinglight
         for x in range(secToUpdate):
